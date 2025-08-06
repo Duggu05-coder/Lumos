@@ -1,0 +1,312 @@
+/* Therapy Chatbot Custom Styles */
+:root {
+    --therapy-primary: #4a90e2;
+    --therapy-success: #5cb85c;
+    --therapy-warning: #f0ad4e;
+    --therapy-danger: #d9534f;
+    --therapy-info: #5bc0de;
+    --therapy-light: #f8f9fa;
+    --therapy-dark: #2c3e50;
+}
+
+/* Calming animations */
+@keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Chat message styling */
+.chat-message {
+    animation: fadeInUp 0.3s ease-out;
+    margin-bottom: 1rem;
+}
+
+.user-message {
+    text-align: right;
+}
+
+.user-message .message-bubble {
+    background: var(--bs-primary);
+    color: white;
+    border-radius: 18px 18px 4px 18px;
+    padding: 12px 16px;
+    display: inline-block;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.therapist-message .message-bubble {
+    background: var(--bs-secondary);
+    color: white;
+    border-radius: 18px 18px 18px 4px;
+    padding: 12px 16px;
+    display: inline-block;
+    max-width: 85%;
+    word-wrap: break-word;
+}
+
+.message-timestamp {
+    font-size: 0.75rem;
+    color: var(--bs-text-muted);
+    margin-top: 4px;
+}
+
+/* Emotion display styling */
+.emotion-badge {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: breathe 3s ease-in-out infinite;
+}
+
+.emotion-joy { background: linear-gradient(45deg, #ffd700, #ffed4e); color: #333; }
+.emotion-sadness { background: linear-gradient(45deg, #3498db, #74b9ff); color: white; }
+.emotion-anger { background: linear-gradient(45deg, #e74c3c, #fd79a8); color: white; }
+.emotion-fear { background: linear-gradient(45deg, #9b59b6, #a29bfe); color: white; }
+.emotion-neutral { background: linear-gradient(45deg, #95a5a6, #b2bec3); color: white; }
+
+/* Confidence meter */
+.confidence-meter {
+    height: 6px;
+    background: var(--bs-secondary);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--bs-danger), var(--bs-warning), var(--bs-success));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+/* Remedy cards */
+.remedy-card {
+    background: var(--bs-dark);
+    border: 1px solid var(--bs-secondary);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.remedy-card:hover {
+    border-color: var(--bs-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.remedy-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.remedy-breathing { background: rgba(91, 192, 222, 0.2); color: var(--bs-info); }
+.remedy-activity { background: rgba(92, 184, 92, 0.2); color: var(--bs-success); }
+.remedy-mindfulness { background: rgba(153, 89, 182, 0.2); color: #9b59b6; }
+.remedy-connection { background: rgba(240, 173, 78, 0.2); color: var(--bs-warning); }
+
+/* Voice recording indicator */
+.voice-recording {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.voice-wave {
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: var(--bs-success);
+    margin: 0 1px;
+    animation: wave 1s ease-in-out infinite;
+}
+
+.voice-wave:nth-child(2) { animation-delay: 0.1s; }
+.voice-wave:nth-child(3) { animation-delay: 0.2s; }
+.voice-wave:nth-child(4) { animation-delay: 0.3s; }
+.voice-wave:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(2); }
+}
+
+/* Camera preview styling */
+#cameraVideo {
+    border: 2px solid var(--bs-secondary);
+    border-radius: 8px;
+}
+
+.camera-active #cameraVideo {
+    border-color: var(--bs-warning);
+    box-shadow: 0 0 15px rgba(240, 173, 78, 0.5);
+}
+
+/* Breathing exercise styling */
+.breathing-circle {
+    width: 200px;
+    height: 200px;
+    border: 3px solid var(--bs-info);
+    border-radius: 50%;
+    margin: 2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--bs-info);
+}
+
+.breathing-inhale {
+    animation: breatheIn 4s ease-in-out infinite;
+}
+
+.breathing-exhale {
+    animation: breatheOut 6s ease-in-out infinite;
+}
+
+@keyframes breatheIn {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+@keyframes breatheOut {
+    0%, 100% { transform: scale(1.2); }
+    50% { transform: scale(1); }
+}
+
+/* Input focus styling */
+.form-control:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+}
+
+/* Input type badge styling */
+.input-type-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-right: 6px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+    vertical-align: middle;
+}
+
+.input-type-badge i {
+    font-size: 0.7rem;
+}
+
+/* Special styling for jokes and songs */
+.remedy-card[data-remedy-type="joke"] {
+    border-left: 4px solid #ffc107;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
+}
+
+.remedy-card[data-remedy-type="joke"] .remedy-icon {
+    color: #ffc107;
+}
+
+.remedy-card[data-remedy-type="song"] {
+    border-left: 4px solid #20c997;
+    background: linear-gradient(135deg, rgba(32, 201, 151, 0.1), rgba(32, 201, 151, 0.05));
+}
+
+.remedy-card[data-remedy-type="song"] .remedy-icon {
+    color: #20c997;
+}
+
+.remedy-card[data-remedy-type="grounding"] {
+    border-left: 4px solid #6f42c1;
+    background: linear-gradient(135deg, rgba(111, 66, 193, 0.1), rgba(111, 66, 193, 0.05));
+}
+
+.remedy-card[data-remedy-type="grounding"] .remedy-icon {
+    color: #6f42c1;
+}
+
+.remedy-card[data-remedy-type="self-care"] {
+    border-left: 4px solid #e83e8c;
+    background: linear-gradient(135deg, rgba(232, 62, 140, 0.1), rgba(232, 62, 140, 0.05));
+}
+
+.remedy-card[data-remedy-type="self-care"] .remedy-icon {
+    color: #e83e8c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .user-message .message-bubble,
+    .therapist-message .message-bubble {
+        max-width: 95%;
+    }
+    
+    .emotion-badge {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .breathing-circle {
+        width: 150px;
+        height: 150px;
+        font-size: 1rem;
+    }
+}
+
+/* Loading states */
+.loading-dots::after {
+    content: '';
+    animation: loadingDots 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingDots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
+
+/* Scroll behavior */
+#chatArea {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for chat area */
+#chatArea::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chatArea::-webkit-scrollbar-track {
+    background: var(--bs-dark);
+}
+
+#chatArea::-webkit-scrollbar-thumb {
+    background: var(--bs-secondary);
+    border-radius: 3px;
+}
+
+#chatArea::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-primary);
+}

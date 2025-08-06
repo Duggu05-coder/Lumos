@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <!-- Main Chat Interface -->
+    <div class="col-lg-8">
+        <div class="card bg-dark border-secondary mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="fas fa-comments text-primary me-2"></i>
+                    Therapy Session
+                </h5>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="textModeBtn">
+                        <i class="fas fa-keyboard"></i> Text
+                    </button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="voiceModeBtn">
+                        <i class="fas fa-microphone"></i> Voice
+                    </button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="cameraModeBtn">
+                        <i class="fas fa-camera"></i> Camera
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="height: 500px; overflow-y: auto;" id="chatArea">
+                <div class="text-center text-muted py-5">
+                    <i class="fas fa-heart fa-3x text-primary mb-3"></i>
+                    <h5>Welcome to Your Therapy Session</h5>
+                    <p>I'm here to listen and support you. Choose how you'd like to communicate:</p>
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <div class="text-center">
+                            <i class="fas fa-keyboard fa-2x text-info mb-2"></i>
+                            <div class="small">Type your thoughts</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-microphone fa-2x text-success mb-2"></i>
+                            <div class="small">Speak your feelings</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-camera fa-2x text-warning mb-2"></i>
+                            <div class="small">Express with your face</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <!-- Text Input Area -->
+                <div id="textInputArea" class="input-group">
+                    <input type="text" class="form-control" id="textInput" placeholder="Share what's on your mind..." maxlength="500">
+                    <button class="btn btn-primary" type="button" id="sendTextBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                
+                <!-- Voice Input Area -->
+                <div id="voiceInputArea" class="d-none text-center">
+                    <button class="btn btn-success btn-lg" id="startVoiceBtn">
+                        <i class="fas fa-microphone me-2"></i>
+                        Start Recording
+                    </button>
+                    <button class="btn btn-danger btn-lg d-none" id="stopVoiceBtn">
+                        <i class="fas fa-stop me-2"></i>
+                        Stop Recording
+                    </button>
+                    <div class="mt-2 small text-muted" id="voiceStatus">Click to start voice recording</div>
+                </div>
+                
+                <!-- Camera Input Area -->
+                <div id="cameraInputArea" class="d-none text-center">
+                    <video id="cameraVideo" width="200" height="150" class="rounded mb-3 d-none"></video>
+                    <canvas id="cameraCanvas" class="d-none"></canvas>
+                    <div>
+                        <button class="btn btn-warning btn-lg" id="startCameraBtn">
+                            <i class="fas fa-camera me-2"></i>
+                            Start Camera
+                        </button>
+                        <button class="btn btn-info btn-lg d-none" id="captureBtn">
+                            <i class="fas fa-camera-retro me-2"></i>
+                            Capture Expression
+                        </button>
+                        <button class="btn btn-secondary btn-lg d-none" id="stopCameraBtn">
+                            <i class="fas fa-times me-2"></i>
+                            Stop Camera
+                        </button>
+                    </div>
+                    <div class="mt-2 small text-muted" id="cameraStatus">Click to start camera for facial emotion detection</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <!-- Current Emotion Display -->
+        <div class="card bg-dark border-secondary mb-4">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="fas fa-heart-pulse text-danger me-2"></i>
+                    Current Emotion
+                </h6>
+            </div>
+            <div class="card-body text-center" id="currentEmotionDisplay">
+                <div class="text-muted">
+                    <i class="fas fa-circle-question fa-3x mb-3"></i>
+                    <div>No emotion detected yet</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Remedies -->
+        <div class="card bg-dark border-secondary mb-4">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="fas fa-leaf text-success me-2"></i>
+                    Quick Remedies
+                </h6>
+            </div>
+            <div class="card-body" id="quickRemedies">
+                <div class="text-center text-muted">
+                    <i class="fas fa-spa fa-2x mb-3"></i>
+                    <div>Remedies will appear based on your emotions</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Breathing Exercise -->
+        <div class="card bg-dark border-secondary">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="fas fa-wind text-info me-2"></i>
+                    Breathing Exercise
+                </h6>
+            </div>
+            <div class="card-body text-center">
+                <div class="btn-group-vertical w-100" role="group">
+                    <button type="button" class="btn btn-outline-info btn-sm" onclick="startBreathingExercise('basic')">
+                        <i class="fas fa-lungs me-2"></i>
+                        Deep Breathing
+                    </button>
+                    <button type="button" class="btn btn-outline-info btn-sm" onclick="startBreathingExercise('478')">
+                        <i class="fas fa-clock me-2"></i>
+                        4-7-8 Technique
+                    </button>
+                    <button type="button" class="btn btn-outline-info btn-sm" onclick="startBreathingExercise('box')">
+                        <i class="fas fa-square me-2"></i>
+                        Box Breathing
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<!-- Session Insights Modal -->
+<div class="modal fade" id="insightsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-chart-pie text-primary me-2"></i>
+                    Session Insights
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="insightsContent">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Conversation History Modal -->
+<div class="modal fade" id="historyModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-history text-info me-2"></i>
+                    Conversation History
+                </h5>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="clearDatabaseHistory()">
+                        <i class="fas fa-database me-1"></i>Clear Database History
+                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+            </div>
+            <div class="modal-body" id="historyContent" style="max-height: 70vh; overflow-y: auto;">
+                <div class="text-center">
+                    <div class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Breathing Exercise Modal -->
+<div class="modal fade" id="breathingModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-wind text-info me-2"></i>
+                    Breathing Exercise
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center" id="breathingContent">
+                <!-- Breathing exercise content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/emotion_detection.js') }}"></script>
+<script src="{{ url_for('static', filename='js/voice_handler.js') }}"></script>
+<script src="{{ url_for('static', filename='js/camera_handler.js') }}"></script>
+{% endblock %}
